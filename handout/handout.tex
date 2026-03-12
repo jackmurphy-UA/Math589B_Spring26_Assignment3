@@ -304,6 +304,15 @@ A final submission should include at least the following core items:
 \item a short discussion of actuator placement and uncontrollable modes.
 \end{itemize}
 
+The final submission is not allowed to use these imports:
+\begin{verbatim}
+from scipy.integrate import solve_ivp
+from scipy.linalg import solve_continuous_are
+\end{verbatim}
+You must implement your own version of continuous LQR solver and
+IVP solver. Your LQR solver must be based on ``direct method''
+discussed in class and the ``numbook''.
+
 \section*{Optional extension}
 If desired, one may add viscous damping to the PDE:
 \[u_{tt}=c^2\Delta u - \gamma u_t + b(t)\psi(x,y),\qquad \gamma>0.\]
