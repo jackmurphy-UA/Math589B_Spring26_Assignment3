@@ -192,7 +192,7 @@ def ensure_dir(path: str | Path) -> Path:
     return out
 
 
-def demo_configuration() -> tuple[MembraneModel, np.ndarray]:
+def demo_configuration() -> Tuple[MembraneModel, np.ndarray]:
     model = build_model(M=6, x0=0.37, y0=0.61, actuator="point")
     x0 = initial_state(
         model,
