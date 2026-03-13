@@ -5,6 +5,8 @@
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{listings} % Include listings package
+
 \hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
 
 \title{LQR Control of a Vibrating Square Membrane\\\large Project Handout}
@@ -324,19 +326,19 @@ discussed in class and the ``numbook''. Thus, you need to implement these
 two functions:
 
 \begin{enumerate}
-\item \texttt{solve_continuous_are}
-\item \texttt{solve_ivp}
+\item \texttt{solve\_continuous\_are}
+\item \texttt{solve\_ivp}
 \end{enumerate}
 
 Make sure that the signatures of these functions and values returned
-correspond to their usage in the file \texttt{modal_lqr.py}.
+correspond to their usage in the file \texttt{modal\_lqr.py}.
 
 The Gradescope Autograder will call your implementation
 through functions:
 
 \begin{enumerate}
-  \item \texttt{simulate_closed_loop}
-  \item \texttt{simulate_open_loop}
+  \item \texttt{simulate\_closed\_loop}
+  \item \texttt{simulate\_open\_loop}
 \end{enumerate}
 
 You must put your implementation in the file
