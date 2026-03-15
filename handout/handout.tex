@@ -354,6 +354,12 @@ through functions:
 You must put your implementation in the file
 \texttt{student.py} in folder \texttt{src/python}.
 
+\subsection{Functions not to be modified}
+The autograder will call the function \texttt{build_model}.
+You should not modify this function, with one exception: if
+you are implementing the optional extension described below.
+
+
 \section*{Optional extension}
 If desired, one may add viscous damping to the PDE:
 \[u_{tt}=c^2\Delta u - \gamma u_t + b(t)\psi(x,y),\qquad \gamma>0.\]
@@ -364,5 +370,14 @@ Then the modal equations become
 \]
 This is not necessary for the project, but it can make the numerical 
 simulations more forgiving.
+
+\subsection{How to handle the extension, so that the autograder notices it?}
+The autograder hook is the function \texttt{build_model}. Add the
+parameter \(\gamma\) to your model if you implement this optional extension.
+Autograder will call your \texttt{build_model}.
+
+
+
+
 
 \end{document}
