@@ -372,6 +372,12 @@ Then the modal equations become
 This is not necessary for the project, but it can make the numerical 
 simulations more forgiving.
 
+\subsection{ Gaussian patch}
+You would use
+\[ \psi(x,y) = \frac{1}{2\pi\sigma^2} e^{-\frac{1}{2\sigma^2} \|(x,y)-(x0,y0)\|^2}. \]
+This would be handled by the extra parameter to the model: \( \sigma \).
+
+
 \subsection{How to handle the extension, so that the autograder notices it?}
 The autograder hook is the function \texttt{build\_model}. Add the
 parameter \(\gamma\) to your model if you implement this optional extension.
