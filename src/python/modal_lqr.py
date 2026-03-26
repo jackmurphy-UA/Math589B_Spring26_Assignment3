@@ -1,8 +1,8 @@
 """Modal LQR control for a vibrating square membrane.
 
 This module builds a truncated modal model for the unit square wave
- equation with one localized actuator, designs an LQR controller,
- simulates the closed-loop dynamics, and reconstructs membrane shapes.
+equation with one localized actuator, designs an LQR controller,
+simulates the closed-loop dynamics, and reconstructs membrane shapes.
 """
 
 from __future__ import annotations
@@ -12,8 +12,8 @@ from pathlib import Path
 from typing import Iterable, List, Sequence, Tuple
 
 import numpy as np
-from scipy.integrate import solve_ivp
-from scipy.linalg import solve_continuous_are
+
+from .student import solve_continuous_are, solve_ivp
 
 Mode = Tuple[int, int]
 
@@ -24,6 +24,7 @@ class MembraneModel:
     M: int
     x0: float
     y0: float
+    gamma: float
     modes: List[Mode]
     omegas_sq: np.ndarray
     beta: np.ndarray
@@ -69,6 +70,7 @@ def build_model(
     y0: float = 0.61,
     actuator: str = "point",
     sigma: float = 0.06,
+    gamma: float = 0.0,
 ) -> MembraneModel:
     modes = build_modes(M)
     N = len(modes)
@@ -82,10 +84,13 @@ def build_model(
     else:
         raise ValueError("actuator must be 'point' or 'patch'")
 
+    # With viscosity gamma, the modal equations are
+    # q'' + gamma q' + omega^2 q = beta b(t),
+    # so the lower-right block is -gamma I.
     A = np.block(
         [
             [np.zeros((N, N)), np.eye(N)],
-            [-np.diag(omegas_sq), np.zeros((N, N))],
+            [-np.diag(omegas_sq), -gamma * np.eye(N)],
         ]
     )
     B = np.vstack([np.zeros((N, 1)), beta.reshape(N, 1)])
@@ -95,6 +100,7 @@ def build_model(
         M=M,
         x0=x0,
         y0=y0,
+        gamma=gamma,
         modes=modes,
         omegas_sq=omegas_sq,
         beta=beta,
@@ -193,7 +199,7 @@ def ensure_dir(path: str | Path) -> Path:
 
 
 def demo_configuration() -> Tuple[MembraneModel, np.ndarray]:
-    model = build_model(M=6, x0=0.37, y0=0.61, actuator="point")
+    model = build_model(M=6, x0=0.37, y0=0.61, actuator="point", gamma=0.0)
     x0 = initial_state(
         model,
         excited_modes=[((1, 1), 0.8), ((2, 1), 0.3), ((1, 3), -0.25)],
